@@ -1,57 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:sustainable_food_system_navigator/features/personalized_nutrition_planner/screens/nutrition_planner_screen.dart';
+import 'package:sustainable_food_system_navigator/features/personalized_nutrition_planner/services/nutrition_planner_api_service.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const SustainableFoodSystemApp());
 }
 
-class AppRoutes {
-  static const String home = '/';
-  static const String cropAdvisory = '/crop_advisory';
-  static const String foodSupply = '/food_supply';
-  static const String nutritionPlanner = '/nutrition_planner';
-  static const String wasteReduction = '/waste_reduction';
-}
-
-final _router = GoRouter(
-  routes: [
-    GoRoute(
-      path: AppRoutes.home,
-      builder: (context, state) => const HomeScreen(),
-    ),
-    GoRoute(
-      path: AppRoutes.cropAdvisory,
-      builder: (context, state) => const CropAdvisorySystemScreen(),
-    ),
-    GoRoute(
-      path: AppRoutes.foodSupply,
-      builder: (context, state) => const FoodSupplyChainScreen(),
-    ),
-    GoRoute(
-      path: AppRoutes.nutritionPlanner,
-      builder: (context, state) => const PersonalizedNutritionPlannerScreen(),
-    ),
-    GoRoute(
-      path: AppRoutes.wasteReduction,
-      builder: (context, state) => const FoodWasteReductionScreen(),
-    ),
-  ],
-);
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class SustainableFoodSystemApp extends StatelessWidget {
+  const SustainableFoodSystemApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routerConfig: _router,
-      title: 'Sustainable Food System Navigator',
-      theme: ThemeData(
-        primarySwatch: Colors.green, // Changed to green for sustainability theme
-        useMaterial3: true,
-      ),
-      debugShowCheckedModeBanner: false,
+    return Provider<ApiService>(
+      create: (context) => ApiService(),
+      child: MaterialApp(
+        title: 'Sustainable Food System Navigator',
+        theme: ThemeData(
+          primarySwatch: Colors.green,
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+          useMaterial3: true,
+        ),
+        initialRoute: '/',
+        routes: {
+          '/': (context) => const HomeScreen(),
+          '/crop_advisory_system': (context) => const CropAdvisoryScreen(),
+          '/food_supply_chain': (context) => const FoodSupplyScreen(),
+          '/personalized_nutrition_planner': (context) => const PersonalizedNutritionPlannerScreen(),
+          '/predictive_food_waste_reduction': (context) => const FoodWasteReductionScreen(),
+          '/climate_smart_farming': (context) => const ClimateSmartFarmingScreen(),
+        },
+        debugShowCheckedModeBanner: false,
+      )
     );
   }
 }
@@ -69,25 +50,39 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _buildFeatureButton(
-              title: 'Crop Advisory System',
-              onPressed: () => context.go(AppRoutes.cropAdvisory),
-              color: Colors.green[700]!,
+            _buildNavigationButton(
+              context,
+              'Crop Advisory System',
+              '/crop_advisory_system',
+              Colors.green,
             ),
-            _buildFeatureButton(
-              title: 'Food Supply Chain Transparency',
-              onPressed: () => context.go(AppRoutes.foodSupply),
-              color: Colors.blue[700]!,
+            const SizedBox(height: 16),
+            _buildNavigationButton(
+              context,
+              'Food Supply Chain',
+              '/food_supply_chain',
+              Colors.blue,
             ),
-            _buildFeatureButton(
-              title: 'Personalized Nutrition Planner',
-              onPressed: () => context.go(AppRoutes.nutritionPlanner),
-              color: Colors.orange[700]!,
+            const SizedBox(height: 16),
+            _buildNavigationButton(
+              context,
+              'Nutrition Planner',
+              '/personalized_nutrition_planner',
+              Colors.orange,
             ),
-            _buildFeatureButton(
-              title: 'Predictive Food Waste Reduction',
-              onPressed: () => context.go(AppRoutes.wasteReduction),
-              color: Colors.purple[700]!,
+            const SizedBox(height: 16),
+            _buildNavigationButton(
+              context,
+              'Food Waste Reduction',
+              '/predictive_food_waste_reduction',
+              Colors.purple,
+            ),
+            const SizedBox(height: 16),
+            _buildNavigationButton(
+              context,
+              'Climate-Smart Farming',
+              '/climate_smart_farming',
+              Colors.red,
             ),
           ],
         ),
@@ -95,25 +90,28 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildFeatureButton({
-    required String title,
-    required VoidCallback onPressed,
-    required Color color,
-  }) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: SizedBox(
-        width: 300, // Fixed width for better appearance
-        child: ElevatedButton(
-          onPressed: onPressed,
-          style: ElevatedButton.styleFrom(
-            backgroundColor: color,
-            minimumSize: const Size(double.infinity, 50), // Full width within SizedBox
-          ),
-          child: Text(
-            title,
-            style: const TextStyle(fontSize: 16, color: Colors.white),
-            textAlign: TextAlign.center,
+  Widget _buildNavigationButton(
+    BuildContext context,
+    String title,
+    String routeName,
+    MaterialColor color,
+  ) {
+    return SizedBox(
+      width: 250,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: color,
+          padding: const EdgeInsets.symmetric(vertical: 16),
+        ),
+        onPressed: () {
+          Navigator.pushNamed(context, routeName);
+        },
+        child: Text(
+          title,
+          style: const TextStyle(
+            fontSize: 18,
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
           ),
         ),
       ),
@@ -122,26 +120,48 @@ class HomeScreen extends StatelessWidget {
 }
 
 // Feature Screens
-class CropAdvisorySystemScreen extends StatelessWidget {
-  const CropAdvisorySystemScreen({super.key});
+class CropAdvisoryScreen extends StatelessWidget {
+  const CropAdvisoryScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Crop Advisory System')),
-      body: const Center(child: Text('Crop Advisory System Content')),
+      appBar: AppBar(
+        title: const Text('Crop Advisory System'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context),
+        ),
+      ),
+      body: const Center(
+        child: Text(
+          'Crop Advisory System Content',
+          style: TextStyle(fontSize: 24),
+        ),
+      ),
     );
   }
 }
 
-class FoodSupplyChainScreen extends StatelessWidget {
-  const FoodSupplyChainScreen({super.key});
+class FoodSupplyScreen extends StatelessWidget {
+  const FoodSupplyScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Food Supply Chain Transparency')),
-      body: const Center(child: Text('Food Supply Chain Transparency Content')),
+      appBar: AppBar(
+        title: const Text('Food Supply Chain'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context),
+        ),
+      ),
+      body: const Center(
+        child: Text(
+          'Food Supply Chain Content',
+          style: TextStyle(fontSize: 24),
+        ),
+      ),
     );
   }
 }
@@ -152,8 +172,19 @@ class FoodSupplyChainScreen extends StatelessWidget {
 //   @override
 //   Widget build(BuildContext context) {
 //     return Scaffold(
-//       appBar: AppBar(title: const Text('Personalized Nutrition Planner')),
-//       body: const Center(child: Text('Personalized Nutrition Planner Content')),
+//       appBar: AppBar(
+//         title: const Text('Nutrition Planner'),
+//         leading: IconButton(
+//           icon: const Icon(Icons.arrow_back),
+//           onPressed: () => Navigator.pop(context),
+//         ),
+//       ),
+//       body: const Center(
+//         child: Text(
+//           'Personalized Nutrition Planner Content',
+//           style: TextStyle(fontSize: 24),
+//         ),
+//       ),
 //     );
 //   }
 // }
@@ -164,8 +195,42 @@ class FoodWasteReductionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Predictive Food Waste Reduction System')),
-      body: const Center(child: Text('Predictive Food Waste Reduction System Content')),
+      appBar: AppBar(
+        title: const Text('Food Waste Reduction'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context),
+        ),
+      ),
+      body: const Center(
+        child: Text(
+          'Predictive Food Waste Reduction Content',
+          style: TextStyle(fontSize: 24),
+        ),
+      ),
+    );
+  }
+}
+
+class ClimateSmartFarmingScreen extends StatelessWidget {
+  const ClimateSmartFarmingScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Climate-Smart Farming'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context),
+        ),
+      ),
+      body: const Center(
+        child: Text(
+          'Climate-Smart Farming Content',
+          style: TextStyle(fontSize: 24),
+        ),
+      ),
     );
   }
 }
