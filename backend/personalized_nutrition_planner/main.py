@@ -8,7 +8,7 @@ import google.generativeai as genai
 scopes = ["https://www.googleapis.com/auth/spreadsheets"]
 
 # Load credentials from the JSON file
-creds = Credentials.from_service_account_file("C:/Users/chhpy/Documents/CHHPYN/WORKSPACE/UM/KITAHACK2025/Sustainable-Food-System-Navigator/Personalized-Nutrition-Planner/credentials.json", scopes=scopes)
+creds = Credentials.from_service_account_file("C:/Users/chhpy/Documents/CHHPYN/KITAHACK2025/sustainable_food_system_navigator/backend/personalized_nutrition_planner/credentials.json", scopes=scopes)
 
 # Authorize the client
 client = gspread.authorize(creds)
