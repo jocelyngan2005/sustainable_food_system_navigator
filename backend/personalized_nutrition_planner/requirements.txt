@@ -1,5 +1,6 @@
 flask==2.3.2
+flask==5.0.1
 gspread==5.8.0
 google-auth-oauthlib==0.7.1
-pandas==2.0.3
 google-generativeai==0.3.2
+pandas==2.2.3
