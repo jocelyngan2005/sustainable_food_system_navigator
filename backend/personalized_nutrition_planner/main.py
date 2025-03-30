@@ -4,26 +4,19 @@ import pandas as pd
 import random
 import google.generativeai as genai
 
-# Define the scope
 scopes = ["https://www.googleapis.com/auth/spreadsheets"]
 
-# Load credentials from the JSON file
 creds = Credentials.from_service_account_file("C:/Users/chhpy/Documents/CHHPYN/KITAHACK2025/sustainable_food_system_navigator/backend/personalized_nutrition_planner/credentials.json", scopes=scopes)
 
-# Authorize the client
 client = gspread.authorize(creds)
 
-# Open the Google Sheet
 sheet_url = "https://docs.google.com/spreadsheets/d/1x2u92DmTs_oMGqrE_czdS7tC7AruOwTv6mN7LJIXSeg/edit"
 sheet = client.open_by_url(sheet_url).sheet1
 
-# Fetch data
 data = sheet.get_all_records()
 
-# Convert the data to a DataFrame
 df = pd.DataFrame(data)
 
-# Configure Gemini API
 genai.configure(api_key="AIzaSyCxW2O8tmv8w_mVSZIjr-Uddl8B9GRdEXE")
 
 # Food Recommendation System
@@ -68,10 +61,8 @@ def generate_meal_plan(df, dietary_preference, allergies, duration, max_calories
     meals_per_day = ["Breakfast", "Lunch", "Dinner"]
 
     if duration == "daily":
-        # Select 3 random foods for a single day
         meal_plan["Today:"] = {meal: random.choice(filtered_foods["Food Name"].tolist()) for meal in meals_per_day}
     elif duration == "weekly":
-        # Select random foods for each meal across 7 days
         for day in range(1, 8):
             meal_plan[f"Day {day}:"] = {meal: random.choice(filtered_foods["Food Name"].tolist()) for meal in meals_per_day}
     else:
@@ -88,10 +79,8 @@ def display_meal_plan(meal_plan):
 
 # Generate recipe suggestions using Gemini
 def suggest_recipes(ingredient, meal_type):
-    # Initialize Gemini model
     model = genai.GenerativeModel("gemini-1.5-pro-latest")
 
-    # Create a prompt for recipe generation
     prompt = f"Suggest a {meal_type} recipe using {ingredient}. Include a brief description and step-by-step instructions."
 
     try:
