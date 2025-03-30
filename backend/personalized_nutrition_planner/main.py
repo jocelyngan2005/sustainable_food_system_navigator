@@ -6,18 +6,18 @@ import google.generativeai as genai
 
 scopes = ["https://www.googleapis.com/auth/spreadsheets"]
 
-creds = Credentials.from_service_account_file("C:/Users/chhpy/Documents/CHHPYN/KITAHACK2025/sustainable_food_system_navigator/backend/personalized_nutrition_planner/credentials.json", scopes=scopes)
+creds = Credentials.from_service_account_file("credentials.json", scopes=scopes)
 
 client = gspread.authorize(creds)
 
-sheet_url = "https://docs.google.com/spreadsheets/d/1x2u92DmTs_oMGqrE_czdS7tC7AruOwTv6mN7LJIXSeg/edit"
+sheet_url = "https://docs.google.com/spreadsheets/d/1x2u92DmTs_oMGqrE_czdS7tC7AruOwTv6mN7LJIXSeg/edit" # Food database Google Sheet
 sheet = client.open_by_url(sheet_url).sheet1
 
 data = sheet.get_all_records()
 
 df = pd.DataFrame(data)
 
-genai.configure(api_key="AIzaSyCxW2O8tmv8w_mVSZIjr-Uddl8B9GRdEXE")
+genai.configure(api_key="API_KEY") # Google Generative AI API Key
 
 # Food Recommendation System
 def recommend_foods(df, dietary_preference=None, min_sustainability_score=0):
