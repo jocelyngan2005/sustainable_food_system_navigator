@@ -70,13 +70,10 @@ class HomeScreen extends StatelessWidget {
             child: IconButton(
               icon: const Icon(Icons.menu, color: Colors.white, size: 30),
               onPressed: () {
-                // Add your menu functionality here
                 Scaffold.of(context).openEndDrawer();
               },
             ),
           ),
-
-          // Permanent Panel with Buttons
           Positioned(
             bottom: 0,
             left: 0,
