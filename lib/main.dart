@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sustainable_food_system_navigator/login_screen.dart';
+import 'package:sustainable_food_system_navigator/home_screen.dart';
+import 'package:sustainable_food_system_navigator/features/crop_advisory_system/screens/crop_advisory_screen.dart';
+import 'package:sustainable_food_system_navigator/features/food_supply_chain/screens/supply_chain_screen.dart';
 import 'package:sustainable_food_system_navigator/features/personalized_nutrition_planner/screens/nutrition_planner_screen.dart';
 import 'package:sustainable_food_system_navigator/features/personalized_nutrition_planner/services/nutrition_planner_api_service.dart';
+import 'package:sustainable_food_system_navigator/features/predictive_food_waste_reduction/screens/food_waste_screen.dart';
+import 'package:sustainable_food_system_navigator/features/climate_smart_farming/screens/smart_farming_screen.dart';
+
 
 void main() {
   runApp(const SustainableFoodSystemApp());
@@ -17,16 +24,35 @@ class SustainableFoodSystemApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Sustainable Food System Navigator',
         theme: ThemeData(
-          primarySwatch: Colors.green,
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
+          primaryColor: const Color(0xFF5f8f58),
+          colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF5f8f58)),
+          scaffoldBackgroundColor: const Color(0xFFfcf3dd),
           visualDensity: VisualDensity.adaptivePlatformDensity,
           useMaterial3: true,
+          fontFamily: 'Poppins',
+          textTheme: const TextTheme(
+            displayLarge: TextStyle(fontWeight: FontWeight.w700),
+            displayMedium: TextStyle(fontWeight: FontWeight.w600),
+            displaySmall: TextStyle(fontWeight: FontWeight.w500),
+            headlineMedium: TextStyle(fontWeight: FontWeight.w600),
+            headlineSmall: TextStyle(fontWeight: FontWeight.w600),
+            titleLarge: TextStyle(fontWeight: FontWeight.w600),
+            bodyLarge: TextStyle(fontWeight: FontWeight.normal),
+            bodyMedium: TextStyle(fontWeight: FontWeight.normal),
+            titleMedium: TextStyle(fontWeight: FontWeight.w500),
+            titleSmall: TextStyle(fontWeight: FontWeight.w500),
+            labelLarge: TextStyle(fontWeight: FontWeight.w600),
+            bodySmall: TextStyle(fontWeight: FontWeight.normal),
+            labelSmall: TextStyle(fontWeight: FontWeight.normal),
+          ),
         ),
-        initialRoute: '/',
+        initialRoute: '/welcome',
         routes: {
-          '/': (context) => const HomeScreen(),
+          '/welcome': (context) => const WelcomeScreen(),
+          '/login': (context) => const LoginScreen(),
+          '/home': (context) => const HomeScreen(),
           '/crop_advisory_system': (context) => const CropAdvisoryScreen(),
-          '/food_supply_chain': (context) => const FoodSupplyScreen(),
+          '/food_supply_chain': (context) => const SupplyChainScreen(),
           '/personalized_nutrition_planner': (context) => const PersonalizedNutritionPlannerScreen(),
           '/predictive_food_waste_reduction': (context) => const FoodWasteReductionScreen(),
           '/climate_smart_farming': (context) => const ClimateSmartFarmingScreen(),
@@ -37,200 +63,146 @@ class SustainableFoodSystemApp extends StatelessWidget {
   }
 }
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class WelcomeScreen extends StatelessWidget {
+  const WelcomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Sustainable Food System Navigator'),
-      ),
+      backgroundColor: const Color(0xFFfcf3dd),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _buildNavigationButton(
-              context,
-              'Crop Advisory System',
-              '/crop_advisory_system',
-              Colors.green,
+            Padding(
+              padding: const EdgeInsets.only(left: 40),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    'assets/images/sustainable.png',
+                    height: 40,
+                    width: 40,
+                    errorBuilder: (context, error, stackTrace) => 
+                      const Icon(Icons.eco, size: 40, color: Color(0xFFB6D28A)),
+                  ),
+                  const SizedBox(width: 10),
+                  const Text(
+                    'Sustainable Food System Navigator',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Color(0xFF343434),
+                    ),
+                  ),
+                ],
+              ),
             ),
-            const SizedBox(height: 16),
-            _buildNavigationButton(
-              context,
-              'Food Supply Chain',
-              '/food_supply_chain',
-              Colors.blue,
+              const SizedBox(height: 45),
+            // Subtitle
+            const Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: EdgeInsets.only(left: 40),
+                child: Text(
+                  'Welcome to',
+                  style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF343434),
+                  ),
+                ),
+              ),
             ),
-            const SizedBox(height: 16),
-            _buildNavigationButton(
-              context,
-              'Nutrition Planner',
-              '/personalized_nutrition_planner',
-              Colors.orange,
+            const Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: EdgeInsets.only(left: 40),
+                child: Text(
+                  'the Future of Food!',
+                  style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF343434),
+                  ),
+                ),
+              ),
             ),
-            const SizedBox(height: 16),
-            _buildNavigationButton(
-              context,
-              'Food Waste Reduction',
-              '/predictive_food_waste_reduction',
-              Colors.purple,
+            const SizedBox(height: 40),
+            Image.asset(
+              'assets/gif/battery.gif',
+              height: 300,
+              width: 300,
+              errorBuilder: (context, error, stackTrace) => 
+                const Icon(Icons.eco, size: 100, color: Colors.green),
             ),
-            const SizedBox(height: 16),
-            _buildNavigationButton(
-              context,
-              'Climate-Smart Farming',
-              '/climate_smart_farming',
-              Colors.red,
+            const SizedBox(height: 40),
+            // Description
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 30),
+              child: Text(
+                'Transforming the way we grow, distribute,',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 15,
+                  color: Color(0xFF343434),
+                ),
+              ),
             ),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 30),
+              child: Text(
+                'and consume food with smart technology.',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 15,
+                  color: Color(0xFF343434),
+                ),
+              ),
+            ),
+            const SizedBox(height: 30),
+            Container(
+              height: 5,
+              margin: const EdgeInsets.symmetric(horizontal: 80),
+              decoration: BoxDecoration(
+                color: const Color(0xFF5f8f58),
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            const SizedBox(height: 40),
+            // Get Started Button
+            Center(
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text(
+                    'Let\'s Get Started!',
+                    style: TextStyle(
+                    fontSize: 22,
+                    color: Color(0xFF343434),
+                    fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(width: 30),
+                  InkWell(
+                    onTap: () {
+                      Navigator.pushReplacementNamed(context, '/login');
+                    },
+                    child: Image.asset(
+                      'assets/images/arrow.png',
+                      height: 60,
+                      width: 60,
+                      errorBuilder: (context, error, stackTrace) => 
+                        const Icon(Icons.arrow_forward, size: 20, color: Colors.black87),
+                    ),
+                  ),  
+                ],
+              ),
+            )
           ],
         ),
       ),
     );
   }
-
-  Widget _buildNavigationButton(
-    BuildContext context,
-    String title,
-    String routeName,
-    MaterialColor color,
-  ) {
-    return SizedBox(
-      width: 250,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: color,
-          padding: const EdgeInsets.symmetric(vertical: 16),
-        ),
-        onPressed: () {
-          Navigator.pushNamed(context, routeName);
-        },
-        child: Text(
-          title,
-          style: const TextStyle(
-            fontSize: 18,
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-    );
-  }
 }
 
-// Feature Screens
-class CropAdvisoryScreen extends StatelessWidget {
-  const CropAdvisoryScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Crop Advisory System'),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
-        ),
-      ),
-      body: const Center(
-        child: Text(
-          'Crop Advisory System Content',
-          style: TextStyle(fontSize: 24),
-        ),
-      ),
-    );
-  }
-}
-
-class FoodSupplyScreen extends StatelessWidget {
-  const FoodSupplyScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Food Supply Chain'),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
-        ),
-      ),
-      body: const Center(
-        child: Text(
-          'Food Supply Chain Content',
-          style: TextStyle(fontSize: 24),
-        ),
-      ),
-    );
-  }
-}
-
-// class PersonalizedNutritionPlannerScreen extends StatelessWidget {
-//   const PersonalizedNutritionPlannerScreen({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Nutrition Planner'),
-//         leading: IconButton(
-//           icon: const Icon(Icons.arrow_back),
-//           onPressed: () => Navigator.pop(context),
-//         ),
-//       ),
-//       body: const Center(
-//         child: Text(
-//           'Personalized Nutrition Planner Content',
-//           style: TextStyle(fontSize: 24),
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-class FoodWasteReductionScreen extends StatelessWidget {
-  const FoodWasteReductionScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Food Waste Reduction'),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
-        ),
-      ),
-      body: const Center(
-        child: Text(
-          'Predictive Food Waste Reduction Content',
-          style: TextStyle(fontSize: 24),
-        ),
-      ),
-    );
-  }
-}
-
-class ClimateSmartFarmingScreen extends StatelessWidget {
-  const ClimateSmartFarmingScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Climate-Smart Farming'),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
-        ),
-      ),
-      body: const Center(
-        child: Text(
-          'Climate-Smart Farming Content',
-          style: TextStyle(fontSize: 24),
-        ),
-      ),
-    );
-  }
-}

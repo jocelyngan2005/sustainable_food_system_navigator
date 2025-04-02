@@ -17,7 +17,7 @@ data = sheet.get_all_records()
 
 df = pd.DataFrame(data)
 
-genai.configure(api_key="API_KEY") # Google Generative AI API Key
+genai.configure(api_key="your_api_key") # Google Generative AI API Key
 
 # Food Recommendation System
 def recommend_foods(df, dietary_preference=None, min_sustainability_score=0):
