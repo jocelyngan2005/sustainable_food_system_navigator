@@ -15,8 +15,9 @@ class FoodCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.symmetric(vertical: 8),
+      margin: const EdgeInsets.symmetric(vertical: 15),
       elevation: 2,
+      color: const Color(0xFF5f8f58),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
@@ -32,7 +33,7 @@ class FoodCard extends StatelessWidget {
                 children: [
                   Icon(
                     _getMealIcon(),
-                    color: Colors.green,
+                    color: Colors.white,
                   ),
                   const SizedBox(width: 10),
                   Text(
@@ -40,28 +41,31 @@ class FoodCard extends StatelessWidget {
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: Colors.green,
+                      color: Colors.white,
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 20),
               Text(
                 foodName,
                 style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
+                  color: Colors.white,
                 ),
               ),
               const SizedBox(height: 8),
-              Row(
+              const Row(
                 children: [
                   Chip(
                     label: const Text('View Recipe'),
-                    backgroundColor: Colors.green[50],
+                    backgroundColor: Colors.white,
                   ),
-                  const Spacer(),
-                  const Icon(Icons.chevron_right, color: Colors.grey),
+                  Spacer(),
+                  Icon(Icons.chevron_right,
+                    color: Colors.white
+                  ),
                 ],
               ),
             ],

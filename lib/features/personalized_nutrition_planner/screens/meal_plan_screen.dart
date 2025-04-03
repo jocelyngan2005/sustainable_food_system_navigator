@@ -29,6 +29,7 @@ class MealPlanPage extends StatefulWidget {
 class _MealPlanPageState extends State<MealPlanPage> {
   late Future<MealPlan> _mealPlanFuture;
   bool _isLoading = false;
+  final List<String> _mealOrder = ['breakfast', 'lunch', 'dinner'];
 
   @override
   void initState() {
@@ -54,11 +55,39 @@ class _MealPlanPageState extends State<MealPlanPage> {
     });
   }
 
+  List<MapEntry<String, String>> _sortMeals(Map<String, String> meals) {
+    final entries = meals.entries.toList();
+    
+    entries.sort((a, b) {
+      final aIndex = _mealOrder.indexOf(a.key.toLowerCase());
+      final bIndex = _mealOrder.indexOf(b.key.toLowerCase());
+      
+      if (aIndex == -1) return 1;
+      if (bIndex == -1) return -1;
+      
+      return aIndex.compareTo(bIndex);
+    });
+    
+    return entries;
+  }
+
+  String _getPlanTitle() {
+    final durationLower = widget.duration.toLowerCase();
+    
+    if (durationLower == 'daily' || durationLower == 'day') {
+      return "Today's Meal Plan";
+    } else if (durationLower == 'weekly' || durationLower == 'week') {
+      return "This Week's Meal Plan";
+    } else {
+      return "Your Meal Plan";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Your Meal Plan'),
+        backgroundColor: const Color(0xFFfcf3dd),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
@@ -102,54 +131,60 @@ class _MealPlanPageState extends State<MealPlanPage> {
                   onRefresh: () async {
                     _loadMealPlan();
                   },
-                  child: SingleChildScrollView(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      children: [
-                        Text(
-                          '${mealPlan.duration == "daily" ? "Today's" : "This Week's"} Meal Plan',
-                          style: const TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: SingleChildScrollView(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0,
+                        vertical: 20.0,
+                      ),
+                      child: Column(
+                        children: [
+                          Text(
+                            _getPlanTitle(),
+                            style: const TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 20),
-                        ...mealPlan.plan.entries.map((entry) {
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                entry.key,
-                                style: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.green,
+                          const SizedBox(height: 20),
+                          ...mealPlan.plan.entries.map((entry) {
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  entry.key,
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color(0xFF5f8f58),
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(height: 10),
-                              ...entry.value.entries.map((meal) {
-                                return FoodCard(
-                                  mealType: meal.key,
-                                  foodName: meal.value,
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => RecipePage(
-                                          foodName: meal.value,
-                                          mealType: meal.key,
-                                          apiService: widget.apiService,
+                                const SizedBox(height: 10),
+                                ..._sortMeals((entry.value).cast<String, String>()).map((meal) {
+                                  return FoodCard(
+                                    mealType: meal.key,
+                                    foodName: meal.value,
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => RecipePage(
+                                            foodName: meal.value,
+                                            mealType: meal.key,
+                                            apiService: widget.apiService,
+                                          ),
                                         ),
-                                      ),
-                                    );
-                                  },
-                                );
-                              }),
-                              const SizedBox(height: 20),
-                            ],
-                          );
-                        }),
-                      ],
+                                      );
+                                    },
+                                  );
+                                }),
+                                const SizedBox(height: 20),
+                              ],
+                            );
+                          }),
+                        ],
+                      ),
                     ),
                   ),
                 );

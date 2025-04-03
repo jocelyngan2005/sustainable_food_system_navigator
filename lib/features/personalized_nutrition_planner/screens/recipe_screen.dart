@@ -46,6 +46,7 @@ class _RecipePageState extends State<RecipePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.foodName),
+        backgroundColor: const Color(0xFFfcf3dd),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
@@ -85,48 +86,55 @@ class _RecipePageState extends State<RecipePage> {
 
                 final recipe = snapshot.data!;
 
-                return SingleChildScrollView(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Food image placeholder with meal type
-                      Container(
-                        height: 200,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[300],
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                _getMealIcon(),
-                                size: 80,
-                                color: Colors.green,
-                              ),
-                              const SizedBox(height: 10),
-                              Text(
-                                widget.mealType,
-                                style: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.green,
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: SingleChildScrollView(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          height: 200,
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF5f8f58),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  _getMealIcon(),
+                                  size: 80,
+                                  color: Colors.white,
                                 ),
-                              ),
-                            ],
+                                const SizedBox(height: 10),
+                                Text(
+                                  widget.mealType,
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                      const SizedBox(height: 20),
+                        const SizedBox(height: 20),
                       
-                      // Recipe content
-                      Text(
-                        recipe,
-                        style: const TextStyle(fontSize: 16, height: 1.5),
-                      ),
-                    ],
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Text(
+                            recipe,
+                            style: const TextStyle(
+                              fontSize: 16, 
+                              height: 1.5,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },
