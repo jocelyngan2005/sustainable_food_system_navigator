@@ -4,7 +4,7 @@ import 'package:sustainable_food_system_navigator/login_screen.dart';
 import 'package:sustainable_food_system_navigator/home_screen.dart';
 import 'package:sustainable_food_system_navigator/features/crop_advisory_system/screens/crop_advisory_screen.dart';
 import 'package:sustainable_food_system_navigator/features/food_supply_chain/screens/supply_chain_screen.dart';
-import 'package:sustainable_food_system_navigator/features/personalized_nutrition_planner/screens/nutrition_planner_screen.dart';
+import 'package:sustainable_food_system_navigator/features/personalized_nutrition_planner/widgets/nutrition_planner_splash.dart';
 import 'package:sustainable_food_system_navigator/features/personalized_nutrition_planner/services/nutrition_planner_api_service.dart';
 import 'package:sustainable_food_system_navigator/features/predictive_food_waste_reduction/screens/food_waste_screen.dart';
 import 'package:sustainable_food_system_navigator/features/climate_smart_farming/screens/smart_farming_screen.dart';
@@ -53,7 +53,7 @@ class SustainableFoodSystemApp extends StatelessWidget {
           '/home': (context) => const HomeScreen(),
           '/crop_advisory_system': (context) => const CropAdvisoryScreen(),
           '/food_supply_chain': (context) => const SupplyChainScreen(),
-          '/personalized_nutrition_planner': (context) => const PersonalizedNutritionPlannerScreen(),
+          '/personalized_nutrition_planner': (context) => const NutritionPlannerSplashScreen(),
           '/predictive_food_waste_reduction': (context) => const FoodWasteReductionScreen(),
           '/climate_smart_farming': (context) => const ClimateSmartFarmingScreen(),
         },
