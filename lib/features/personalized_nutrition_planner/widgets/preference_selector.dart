@@ -11,7 +11,7 @@ class PreferenceSelector extends StatelessWidget {
     required this.title,
     required this.options,
     required this.selectedValue,
-    required this.onChanged,
+    required this.onChanged, required double borderRadius,
   });
 
   @override

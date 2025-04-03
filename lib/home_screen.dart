@@ -40,7 +40,7 @@ class HomeScreen extends StatelessWidget {
                       'Click on the ',
                       style: TextStyle(
                         fontSize: 18,
-                        color: Color(0xFFffffff),
+                        color: Colors.white,
                       ),
                     ),
                     Text(
@@ -55,7 +55,7 @@ class HomeScreen extends StatelessWidget {
                       'below to explore!',
                       style: TextStyle(
                         fontSize: 18,
-                        color: Color(0xFFffffff),
+                        color: Colors.white,
                       ),
                     ),
                   ],
