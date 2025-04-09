@@ -6,16 +6,25 @@
 ![Tech Stack](https://img.shields.io/badge/Tech-Flutter,Firebase,TensorFlow,Blockchain-blue)
 
 ## Table of Contents
-- [Introduction](#-introduction)
-- [Problem Statement](#-problem-statement)
-- [Alignment with UN SDGs](#-alignment-with-un-sdgs)
-- [Key Features](#-key-features)
-- [Tech Stack](#-tech-stack)
-- [Future Enhancements](#-future-enhancements)
-- [Installation & Setup](#-installation--setup)
-- [Contributing](#-contributing)
-- [License](#-license)
-- [Contact](#-contact)
+- [Sustainable Food Systems Platform](#sustainable-food-systems-platform)
+  - [Table of Contents](#table-of-contents)
+  - [📌 Introduction](#-introduction)
+  - [🎯 Problem Statement](#-problem-statement)
+  - [🌍 Alignment with UN SDGs](#-alignment-with-un-sdgs)
+  - [✨ Key Features](#-key-features)
+    - [🌱 AI-Powered Crop Advisory](#-ai-powered-crop-advisory)
+    - [🔗 Blockchain-Verified Supply Chain](#-blockchain-verified-supply-chain)
+    - [� Personalized Nutrition Planning](#-personalized-nutrition-planning)
+    - [♻️ Predictive Food Waste Reduction](#️-predictive-food-waste-reduction)
+    - [🌦️ Climate-Smart Farming Library](#️-climate-smart-farming-library)
+  - [📱 App Screenshots](#-app-screenshots)
+    - [Key Features Showcase](#key-features-showcase)
+  - [🔧 Installation \& Setup](#-installation--setup)
+    - [Prerequisites](#prerequisites)
+    - [Steps](#steps)
+  - [🤝 Contributing](#-contributing)
+  - [📜 License](#-license)
+  - [📞 Contact](#-contact)
 
 ## 📌 Introduction
 Our platform bridges the gap between fragmented food system solutions by integrating AI-driven agriculture, transparent supply chains, personalized nutrition, and food waste reduction. By optimizing for both human and environmental health, we empower farmers, consumers, and businesses to adopt sustainable practices seamlessly.
@@ -63,24 +72,10 @@ Our solution directly contributes to:
 - Uses geolocation and weather data
 - Suggests sustainable farming methods
 
-## 🛠️ Tech Stack
-| Component              | Technology Used                          |
-|------------------------|------------------------------------------|
-| Frontend               | Flutter (cross-platform)                 |
-| Database               | Firebase Firestore                       |
-| Authentication         | Firebase Auth                            |
-| AI/ML Models           | TensorFlow, Cloud Vision API             |
-| Natural Language       | Gemini API                               |
-| Blockchain             | Smart contracts (Ethereum/Solidity)      |
-| Location Services      | Google Maps API, Flutter Geolocator      |
-| Analytics              | Firebase Analytics                       |
+## 📱 App Screenshots
 
-## 🚀 Future Enhancements
-- **IoT Integration:** Cloud IoT Core for real-time farm sensor data
-- **AutoML for Spoilage Prediction:** Optimize food redistribution
-- **Supply Chain Optimization:** AI-driven logistics to reduce waste
-- **Sustainable Food Discovery:** Google Maps integration for local eco-friendly markets
-- **Nutrition Intelligence:** AutoML Tables for hyper-personalized meal plans
+### Key Features Showcase
+
 
 ## 🔧 Installation & Setup
 
@@ -89,9 +84,68 @@ Our solution directly contributes to:
 - Firebase account
 - Google Cloud account (for AI services)
 - Node.js (for blockchain development)
+- Python (v3.9 or higher)
+
 
 ### Steps
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-repo/sustainable-food-systems.git
-   cd sustainable-food-systems
+   git clone https://github.com/jocelyngan2005/agriroute.git
+   cd agriroute
+2. **Set Up Python Backend**
+   ```bash
+   #Navigate to backend directory
+   cd backend
+
+   #Create and activate virtual environment
+   python -m venv venv
+   venv\Scripts\activate
+
+   #Install Python dependencies
+   pip intall -r requirements.txt
+3. **Configure Firebase**
+   - Set up Firestore & Authentication in Firebase Console
+   - Add your google-services,jason to /android/app
+4. **Set up AI services**
+   - Enable Cloud Vision API and Gemini API in Google Cloud Console
+5. **Run the system**
+   ```bash
+   cd backend
+   
+   #Crop-Advisory System
+   cd crop_advisory_system
+   python main.py
+
+   #Blockchain Supply Chain
+   cd supply_chain
+   python main.py
+
+   #Personalized Nutrition Planner
+   cd personalized_nutrition_planner
+   python api_server.py
+
+   #Predictive Food Waste Reduction
+   cd food_waste
+   python main.py
+
+   #Climate-Smart Farming
+   cd climate_smart_farming
+   pyhton main.py
+6. **Run the application**
+   ```bash
+   flutter run
+
+## 🤝 Contributing
+
+We welcome contributions from the community! Here's how you can help:
+- Report bugs by opening an issue
+- Suggest features through the issue tracker
+- Submit code improvements via pull requests
+
+## 📜 License
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 📞 Contact
+For questions or partnership opportunities:
+- Project Lead: Jocelyn Gan
+- GitHub: @jocelyngan2005
