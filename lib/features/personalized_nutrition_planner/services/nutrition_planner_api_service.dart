@@ -4,7 +4,7 @@ import '../models/food_item.dart';
 import '../models/meal_plan.dart';
 
 class ApiService {
-  static const String baseUrl = 'http://192.168.162.81:5000'; // Android emulator
+  static const String baseUrl = 'http://10.0.2.2:5000'; // Android emulator
 
   Future<List<FoodItem>> recommendFoods({
     String? dietaryPreference,
